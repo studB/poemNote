@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line</title>
+</head>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            display: flex;
+            flex-direction: column;
+        }
+        .category-menu{
+            width: 100%;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            background: #fff;
+            z-index: 2021;
+        }
+        .category-menu button{
+            position: relative;
+            margin: 0px 10px;
+            border: none;
+            outline: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            background: rgba(255,255,255,0.5);
+            transition: all 0.6s ease-in-out;
+            font-size: 15px;
+            color: #666;
+            font-weight: 600;
+            transition: all 0.6s ease-in-out;
+        }
+        .category-menu button:nth-child(1)::before {
+            position: absolute;
+            content: '';
+            width: 0px;
+            height: 0px;
+            border-style: solid;
+            border-width: 15px 20px 15px 0px;
+            border-radius: 5px;
+            border-color: transparent rgb(255, 146, 19, 0.5) transparent transparent;
+            transform: translateX(-30px);
+            transform: translateY(-15px);
+        }
+        .category-menu button:nth-child(n+2) {
+            border: 1px solid rgb(255, 146, 19, 0.5);
+            border-right: 1px solid rgb(255, 146, 19, 0.2);
+            border-bottom: 1px solid rgb(255, 146, 19, 0.2);
+            box-shadow: 0 5px 15px rgb(255, 146, 19, 0.15);
+        }
+        .category-menu button:nth-child(n+2):hover {
+            background: rgb(255, 146, 19, 0.8);
+            color: #fff;
+        }
+        .category-menu > button.selected {
+            background: rgb(255, 146, 19, 0.8);
+            color: #fff;
+        }
+        .content-frame{
+            height: calc(100vh - 65px);
+            display: flex;
+            align-items: center;
+        }
+        .content-box{
+            margin: 50px 70px 130px 70px;
+            flex: 1;
+            min-width: 700px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .content-box > p {
+            position: absolute;
+            margin: 10px 0px;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            background: #fff;
+            box-shadow: 0px 0px 5px rgb(255, 146, 19,0.2), 0px 0px 5px #666;
+            transition: all 0.7s ease-in-out;
+        }
+        .main-line {
+            width: 700px;
+            height: 200px;
+            z-index: 50;
+            font-size: 22px;
+            color: #666;
+        }
+        .pre-line {
+            width: 550px;
+            height: 158px;
+            transform: translateY(-130px);
+            z-index: 40;
+            font-size: 17px;
+            color: transparent;
+            text-shadow: 0 0 3px #666;
+        }
+        .pre-pre-line {
+            width: 432px;
+            height: 123px;
+            transform: translateY(-230px);
+            z-index: 30;
+            font-size: 13px;
+            color: transparent;
+            text-shadow: 0 0 6px #666;
+        }
+        .pre-pre-pre-line {
+            width: 339px;
+            height: 96px;
+            transform: translateY(-290px);
+            z-index: 20;
+            font-size: 10px;
+            color: transparent;
+            text-shadow: 0 0 6px #666;
+            opacity: 0;
+        }
+        .post-line {
+            width: 550px;
+            height: 158px;
+            transform: translateY(130px);
+            z-index: 40;
+            font-size: 17px;
+            color: transparent;
+            text-shadow: 0 0 3px #666;
+        }
+        .post-post-line {
+            width: 432px;
+            height: 123px;
+            transform: translateY(230px);
+            z-index: 30;
+            font-size: 13px;
+            color: transparent;
+            text-shadow: 0 0 6px #666;
+        }
+        .post-post-post-line {
+            width: 339px;
+            height: 96px;
+            transform: translateY(290px);
+            z-index: 20;
+            font-size: 10px;
+            color: transparent;
+            text-shadow: 0 0 6px #666;
+            opacity: 0;
+        }
+
+        div { 
+            border: 0px solid red;
+        }
+    </style>
+<body>
+    <div class="category-menu">
+        <button></button>
+        <button>시</button>
+        <button>비평</button>
+        <button>미학</button>
+        <button>단상</button>
+        <button class="selected">한줄</button>
+    </div>
+    <div class="content-frame">
+        <div class="content-box">
+            <p id="1" class="pre-pre-pre-line"></p>
+            <p id="2" class="pre-pre-line">이전의 이전 글</p>
+            <p id="3" class="pre-line">이전 글</p>
+            <p id="4" class="main-line">
+                이제 내겐 후회를 비롯한 되돌림과 비슷한 그 어떤 것도 없다.
+            </p>
+            <p id="5" class="post-line">이후 글</p>
+            <p id="6" class="post-post-line">이후의 이후 글</p>
+            <p id="7" class="post-post-post-line">이후의 이후의 이후의 글</p>
+        </div>
+        <button onclick="test()">Test</button>
+        <script>
+            function test(){
+                const elmt2 = document.getElementById("2");
+                elmt2.classList.remove("pre-pre-line");
+                elmt2.classList.add("pre-pre-pre-line");
+                
+                const elmt3 = document.getElementById("3");
+                elmt3.classList.remove("pre-line");
+                elmt3.classList.add("pre-pre-line");
+                
+                const elmt4 = document.getElementById("4");
+                elmt4.classList.remove("main-line");
+                elmt4.classList.add("pre-line");
+
+                const elmt5 = document.getElementById("5");
+                elmt5.classList.remove("post-line");
+                elmt5.classList.add("main-line");
+
+                const elmt6 = document.getElementById("6");
+                elmt6.classList.remove("post-post-line");
+                elmt6.classList.add("post-line");
+
+                const elmt7 = document.getElementById("7");
+                elmt7.classList.remove("post-post-post-line");
+                elmt7.classList.add("post-post-line");
+
+            }
+        </script>
+    </div>
+</body>
+</html>

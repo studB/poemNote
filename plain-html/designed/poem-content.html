@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poem</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .category-menu{
+            width: 100%;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            background: #fff;
+            z-index: 2021;
+        }
+        .category-menu button{
+            position: relative;
+            margin: 0px 10px;
+            border: none;
+            outline: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            background: rgba(255,255,255,0.5);
+            transition: all 0.6s ease-in-out;
+            font-size: 15px;
+            color: #666;
+            font-weight: 600;
+            transition: all 0.6s ease-in-out;
+        }
+        .category-menu button:nth-child(1)::before {
+            position: absolute;
+            content: '';
+            width: 0px;
+            height: 0px;
+            border-style: solid;
+            border-width: 15px 20px 15px 0px;
+            border-radius: 5px;
+            border-color: transparent rgb(255, 146, 19, 0.5) transparent transparent;
+            transform: translateX(-30px);
+            transform: translateY(-15px);
+        }
+        .category-menu button:nth-child(n+2) {
+            border: 1px solid rgb(255, 146, 19, 0.5);
+            border-right: 1px solid rgb(255, 146, 19, 0.2);
+            border-bottom: 1px solid rgb(255, 146, 19, 0.2);
+            box-shadow: 0 5px 15px rgb(255, 146, 19, 0.15);
+        }
+        .category-menu button:nth-child(n+2):hover {
+            background: rgb(255, 146, 19, 0.8);
+            color: #fff;
+        }
+        .category-menu > button.selected {
+            background: rgb(255, 146, 19, 0.8);
+            color: #fff;
+        }
+        .content-frame{
+            height: calc(100vh - 65px);
+            display: flex;
+            align-items: center;
+        }
+        .list-container {
+            width: 30%;
+            min-width: 250px;
+            max-width: 400px;
+            height: calc(100vh - 110px);
+            margin: 15px 0px 30px 0px;
+        }
+        .list-box {
+            height: inherit;
+            overflow-y: auto;
+        }
+
+        .list-box > li{
+            position: relative;
+            padding: 8px 8px 8px 40px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            color: #666;
+            cursor: pointer;
+        }
+        .list-box > li.selected {
+            background: rgba(32,33,36,0.02);
+            box-shadow: inset 0px 1px 6px 0px rgba(32,33,36,0.28);
+            cursor: default;
+        }
+
+        .publish-show-button {
+            position: absolute;
+            right: 10px;
+            width: 35px;
+            height: 35px;
+            border: none;
+            border-radius: 50%;
+            background: rgb(139,0,139, 0.8);
+            color: #fff;
+            box-shadow: 0px 2px 6px 1px rgba(32,33,36,0.6);
+            cursor: pointer;
+        }
+
+        .poem-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            background: #fff;
+        }
+        .poem-box {
+            min-width: 700px;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .poem-box > textarea {
+            border: none;
+            outline: none;
+            resize: none;
+            width: 70%;
+            height: 90%;
+            padding: 15px;
+            box-shadow: inset 0px 1px 3px 0px rgba(32,33,36,0.28);
+        }
+
+        .sub-box {
+            width: 450px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .title-box {
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        .title-box span {
+            width: 400px;
+            padding: 0px 0px 10px 8px;
+            color: #666;
+            font-size: 18px;
+        }
+
+        .title-box input {
+            border: none;
+            outline: none;
+            width: 400px;
+            height: 50px;
+            color: #666;
+            font-size: 20px;
+            font-weight: 500;
+            padding: 10px;
+            box-shadow: inset 0px 1px 6px 0px rgba(32,33,36,0.28);
+        }
+        .tag-box > span {
+            width: 400px;
+            padding: 0px 0px 10px 8px;
+            color: #666;
+            font-size: 18px;
+        }
+        .tag-box {
+            margin-top: 50px;
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .tag-box > textarea {
+            border: none;
+            outline: none;
+            padding: 15px;
+            width: 400px;
+            min-height: 64px;
+            max-height: 300px;
+            color: #666;
+            font-size: 15px;
+            resize: none;
+            box-shadow: inset 0px 1px 6px 0px rgba(32,33,36,0.28);
+        }
+
+        .rewrite-box > button {
+            margin-top: 40px;
+            width: 140px;
+            height: 38px;
+            border: none;
+            border-radius: 19px;
+            background: #fff;
+            color: #666;
+            font-size: 17px;
+            font-weight: 600;
+            border: 1px solid rgb(255, 146, 19, 0.5);
+            border-right: 1px solid rgb(255, 146, 19, 0.2);
+            border-bottom: 1px solid rgb(255, 146, 19, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .rewrite-box > button:hover {
+            background: rgb(255, 146, 19,0.8);
+            color: #fff;
+        }
+        .written-status-box {
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .written-status-label{
+            width: 300px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .written-status-label > span {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+        .written-status-label > span > input[type="radio"]{
+            position: absolute;
+            visibility: hidden;
+        }
+        .written-status-label > span > input[type="radio"] + label{
+            cursor: pointer;
+            color: #666;
+            font-size: 17px;
+        }
+        .written-status-label > span > input[type="radio"]:checked + label{
+            color: rgb(0, 76, 3, 1);
+        }
+        .written-status-bar{
+            width: 300px;
+            height: 20px;
+            padding: 0px 50px;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+        }
+        .written-status-bar > div {
+            width: 200px;
+            height: 10px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: inset 0px 1px 6px 0px rgba(32,33,36,0.28);
+            display: flex;
+            flex-direction: row;
+        }
+        .written-status-bar > div > a {
+            width: 50%;
+            background: rgb(0, 76, 3, 1);
+            border-radius: 15px 0px 0px 15px;
+        }
+
+
+        div {
+            border: 0px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div class="category-menu">
+        <button></button>
+        <button class="selected">시</button>
+        <button>비평</button>
+        <button>미학</button>
+        <button>단상</button>
+        <button>한줄</button>
+    </div>
+    <div class="content-frame">
+        <div class="list-container">
+            <ul class="list-box">
+                <li>
+                    이것은 나의 첫번째 시....!!
+                </li>
+                <li>
+                    이것은 나의 첫번째 시....!!
+                </li>
+                <li class="selected">
+                    이것은 나의 첫번째 시....!!
+                    <button class="publish-show-button">발행</button>
+                </li>
+                <li>
+                    이것은 나의 첫번째 시....!!
+                </li>
+                <li>
+                    이것은 나의 첫번째 시....!!
+                </li>
+                <li>
+                    이것은 나의 첫번째 시....!!
+                </li>
+            </ul>
+        </div>
+        <div class="poem-container">
+            <div class="poem-box">
+                <textarea></textarea>
+            </div>
+            <div class="sub-box">
+                <div class="title-box">
+                    <span>제목</span>
+                    <input></input>
+                </div>
+                <div class="tag-box">
+                    <span>#</span>
+                    <textarea oninput="auto_height(this)"></textarea>
+                </div>
+                <div class="written-status-box">
+                    <div class="written-status-label">
+                        <span>
+                            <input id="level-1" type="radio" name="written-status" value="씨앗" checked>
+                            <label for="level-1">씨앗</label>
+                        </span>
+                        <span>
+                            <input id="level-2" type="radio" name="written-status" value="작품미달">
+                            <label for="level-2">작품미달</label>
+                        </span>
+                        <span>
+                            <input id="level-3" type="radio" name="written-status" value="발행가능">
+                            <label for="level-3">발행가능</label>
+                        </span>
+                    </div>
+                    <div class="written-status-bar">
+                        <div>
+                            <a></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="rewrite-box">
+                    <button>저장</button>
+                    <button>발행</button>
+                </div>
+            </div>
+        </div>
+        <script>
+            function auto_height(elmt) {
+                elmt.style.height = "64px";
+                elmt.style.height = (elmt.scrollHeight) + "px";
+            }
+        </script>
+    </div>
+</body>
+</html>

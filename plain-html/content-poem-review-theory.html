@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Content-poem-review-theory</title>
+    <style>
+        * {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body style="display: flex; justify-content: center; height: 100vh;">
+    <main style="display: flex; flex-direction: row; width: 100vw; margin-top: 150px;">
+        <section style="flex: 1; display: flex; flex-direction: row;">
+            <!-- Content Section -->
+            
+            <!-- Content List -->
+            <aside style="position: static; width: 200px; height: 100%;">
+                <!-- Title List -->
+                <div>
+                    <span>Title</span>
+                    <!-- Published Id List-->
+                    <ul>
+                        <li>1</li>
+                        <li>2</li>
+                    </ul>
+                </div>
+                <div>
+                    <span>Title2</span>
+                    <!-- Published Id List-->
+                    <ul>
+                        <li>1</li>
+                        <li>2</li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Content Body -->
+            <div style="position: relative; width: 100%; min-width: 500px; height: 100%;">
+                <!-- Content Edit -->
+                <div style="height: inherit;">
+                    <div contenteditable="true">Write title</div>
+                    <textarea style="resize: none;"></textarea>
+                </div>
+
+                <!-- Save and Publish -->
+                <div style="position: absolute; bottom: 0; width: 100%;">
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div>
+                            <div contenteditable="true">Write Tag</div>
+                        </div>
+                        <!-- If published, then show a valueStatus and writtenStatus -->
+                        <div>
+                            <span> 걸작본 </span>
+                            <span> 습작본 </span>
+                            <span> 수정본 </span>
+                            <span> 초고본 </span>
+                        </div>
+                        <div>
+                            <!-- Click Publish, then toolbar open -->
+                            <button>Publish</button> | 
+                            <button>Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section style="width: 300px; position: relative;">
+            <!-- Category list Section -->
+            <nav style="position: absolute; right : 30px;">
+                <ul style="list-style-type: none;">
+                    <li>
+                        <span>POEM</span>
+                    </li>
+                    <li>
+                        <span>REVIEW</span>
+                    </li>
+                    <li>
+                        <span>LINE</span>
+                    </li>
+                    <li>
+                        <span>OPINION</span>
+                    </li>
+                    <li>
+                        <span>THEORY</span>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+    </main>
+</body>
+</html>

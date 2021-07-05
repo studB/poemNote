@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-image: url('./palmtreeO.gif');
+            background-size: cover;
+            overflow: auto;
+        }
+        .category-main-frame {
+            width: 100vw;
+            height: 100vh;
+            background: rgb(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+        }
+        .upper-container {
+            position: relative;
+            width: 100%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+        .upper-background {
+            position: absolute;
+            width: 100%;
+            height: 300px;
+            background: rgb(255, 255, 250);
+            box-shadow: 0px 20px 20px rgba(0,0,0,0.1),
+                        0px 0px 20px rgba(0,0,0,0.1);
+        }
+        .moving-box {
+            width: 30%;
+            max-width: 450px;
+            min-width: 300px;
+            height: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+        }
+        .circle {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(to bottom, rgb(0, 76, 3, 0.75), rgb(0,0,0,0));
+            z-index: 1;
+        }
+        .moving-box img {
+            width: 180px;
+            z-index: 2;
+            transition: all 0.75s ease;
+        }
+        .menu {
+            position: relative;
+            width: 70px;
+            height: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .menu button {
+            border: none;
+            outline: none;
+            margin-top: 30px;
+            width: 50px;
+            height: 50px;
+            min-height: 50px;
+            border-radius: 50%;
+            background: none;
+            cursor: pointer;
+            background: rgba(255,255,255,0.5);
+            transition: all 0.6s ease-in-out;
+            font-size: 15px;
+            color: #666;
+            font-weight: 600;
+        }
+        .menu button:nth-child(1){
+            border: 1px solid rgb(0, 76, 3, 0.5);
+            border-right: 1px solid rgb(0, 76, 3, 0.2);
+            border-bottom: 1px solid rgb(0, 76, 3, 0.2);
+            box-shadow: 0 5px 15px rgba(0,76,3,0.15);
+        }
+        .menu button:nth-child(1):hover{
+            background: rgb(0, 76, 3, 0.8);
+            color: #fff;
+        }
+        .menu button:nth-child(2){
+            border: 1px solid rgba(245, 70, 66, 0.5);
+            border-right: 1px solid rgba(245, 70, 66, 0.2);
+            border-bottom: 1px solid rgba(245, 70, 66, 0.2);
+            box-shadow: 0 5px 15px rgba(245, 70, 66, 0.15);
+        }
+        .menu button:nth-child(2):hover{
+            background: rgb(245, 70, 66, 0.8);
+            color: #fff;
+        }
+        .menu button:nth-child(3){
+            border: 1px solid rgba(8, 83, 156, 0.5);
+            border-right: 1px solid rgba(8, 83, 156, 0.2);
+            border-bottom: 1px solid rgba(8, 83, 156, 0.2);
+            box-shadow: 0 5px 15px rgba(8, 83, 156, 0.15);
+        }
+        .menu button:nth-child(3):hover{
+            background: rgb(8, 83, 156, 0.8);
+            color: #fff;
+        }
+
+        /* poem flex-box */
+
+        .category-container {
+            padding: 0px 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category {
+            position: relative;
+            margin: 100px 10px;
+            width: 100px;
+            min-width: 100px;
+            height: 60px;
+            background: #fff;
+            border: 1px solid red;
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.5);
+            border-right: 1px solid rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 15px;
+            color: #666;
+            font-weight: 600;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        .category::after{
+            position: absolute;
+            content: '';
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: black;
+            background: rgb(255, 255, 250, 0.9);
+            box-shadow: inset 0px 0px 10px rgb(255, 146, 19,0.2), 0px 0px 5px orange;
+            animation: slide 3s linear infinite;
+            animation-delay: calc(-0.5s * var(--i));
+        }
+
+        .category:hover::after{
+            position: absolute;
+            content: '';
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: black;
+            background: rgb(255, 146, 19, 0.9);
+            box-shadow: inset 0px 0px 10px rgb(255, 146, 19,0.2), 0px 0px 5px orange;
+            animation: none;
+        }
+
+        @keyframes slide {
+            0%, 100%{
+                transform: translateY(-10px);
+            }
+            50%{
+                transform: translateY(10px);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="category-main-frame">
+        <div class="upper-container">
+            <div class="upper-background"></div>
+            <div class="moving-box">
+                <div class="circle"></div>
+                <img src="quill-drawing-a-line.png">
+            </div>
+            <div class="menu">
+                <button>작성</button>
+                <button>통계</button>
+                <button>관리</button>
+            </div>
+        </div>
+        <div class="category-container">
+            <div class="category" style="--i:0;">시</div>
+            <div class="category" style="--i:2;">비평</div>
+            <div class="category" style="--i:1;">미학론</div>
+            <div class="category" style="--i:4;">단상</div>
+            <div class="category" style="--i:3;">한줄모음</div>
+        </div>
+    </div>
+    <script>
+        const box = document.querySelector('.moving-box');
+        const quil = document.querySelector('.moving-box img');
+
+        box.addEventListener('mousemove', (e) => {
+            let xAxis = ( window.innerWidth / 2 - e.pageX ) / 5;
+            let yAxis = ( window.innerHeight / 4 - e.pageY ) / 5;
+            box.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        })
+        box.addEventListener('mouseenter', (e) => {
+            box.style.transition = 'all 0.2s ease';
+            quil.style.transform = 'translateZ(100px)';
+        })
+        box.addEventListener('mouseleave', (e) => {
+            box.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            box.style.transition = 'all 0.5s ease';
+            quil.style.transform = 'translateZ(0px)';
+        })
+    </script>
+</body>
+</html>

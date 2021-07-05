@@ -1,0 +1,26 @@
+server:
+    port: 9000
+
+db:
+    location: 0.0.0.0
+
+spring:
+    application:
+        name: poemNote
+        github: https://github.com/studB/poemNote
+    datasource:
+        #platform: h2
+        #driver-class-name: org.h2.Driver
+        #jdbc-url: jdbc:h2:tcp://localhost/~/Desktop/dev/pnDBTest
+        #username: sa
+        #password:
+        platform: postgresql
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://${db.location}:5432/poemnote
+        # url: jdbc:postgresql://192.168.35.246:5432/poemnote
+        username: poet
+        password: poet
+    devtools:
+        livereload:
+            enabled: true
+

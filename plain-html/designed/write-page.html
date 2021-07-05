@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .manage-menu {
+            width: 100%;
+            height: 65px;
+            display: flex;
+            align-items: center;
+        }
+        .manage-menu button {
+            position: relative;
+            margin: 0px 10px;
+            border: none;
+            outline: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            background: rgba(255,255,255,0.5);
+            transition: all 0.6s ease-in-out;
+            font-size: 15px;
+            color: #666;
+            font-weight: 600;
+        }
+        .manage-menu button:nth-child(1)::before{
+            position: absolute;
+            content: '';
+            width: 0px;
+            height: 0px;
+            border-style: solid;
+            border-width: 15px 20px 15px 0;
+            border-radius: 5px;
+            border-color: transparent rgb(0, 76, 3, 0.5) transparent transparent;
+            transform: translateX(-30px);
+            transform: translateY(-15px);
+        }
+
+        .manage-menu button:nth-child(2){
+            background: rgb(0, 76, 3, 0.8);
+            color: #fff;
+            border: 1px solid rgb(0, 76, 3, 0.5);
+            border-right: 1px solid rgb(0, 76, 3, 0.2);
+            border-bottom: 1px solid rgb(0, 76, 3, 0.2);
+            box-shadow: 0 5px 15px rgba(0,76,3,0.15);
+        }
+        .manage-menu button:nth-child(2):hover{
+            background: rgb(0, 76, 3, 0.8);
+            color: #fff;
+        }
+        .manage-menu button:nth-child(3){
+            border: 1px solid rgba(245, 70, 66, 0.5);
+            border-right: 1px solid rgba(245, 70, 66, 0.2);
+            border-bottom: 1px solid rgba(245, 70, 66, 0.2);
+            box-shadow: 0 5px 15px rgba(245, 70, 66, 0.15);
+        }
+        .manage-menu button:nth-child(3):hover{
+            background: rgb(245, 70, 66, 0.8);
+            color: #fff;
+        }
+        .manage-menu button:nth-child(4){
+            border: 1px solid rgba(8, 83, 156, 0.5);
+            border-right: 1px solid rgba(8, 83, 156, 0.2);
+            border-bottom: 1px solid rgba(8, 83, 156, 0.2);
+            box-shadow: 0 5px 15px rgba(8, 83, 156, 0.15);
+        }
+        .manage-menu button:nth-child(4):hover{
+            background: rgb(8, 83, 156, 0.8);
+            color: #fff;
+        }
+
+
+        .write-frame {
+            width: 100%;
+            height: calc(100vh - 65px);
+            box-shadow: 0px 1px 6px 0px rgba(32,33,36,0.28);
+            background: rgb(255, 255, 250);
+            display: flex;
+            flex-direction: row;
+        }
+        .right-frame {
+            width: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        .category-container {
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .category-box {
+            position: relative;
+            margin-top: 5px;
+            padding-bottom: 10px;
+            width: 90px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            color: #666;
+            font-size: 17px;
+            cursor: pointer;
+        }
+        .category-box::after{
+            position: absolute;
+            content: '';
+            width: 10px;
+            height: 10px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: rgba(102, 102, 102, 0.8);
+            border: 1px solid #fff;
+            box-shadow: inset 0px 0px 5px rgb(255, 146, 19,0.2), 0px 0px 5px #666;
+        }
+        .category-box.selected{
+            font-size: 19px;
+            font-weight: 600;
+        }
+        .category-box.selected::after{
+            background: rgb(0, 76, 3, 0.8);
+        }
+        .title-container {
+            margin-bottom: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-box{
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        .title-box {
+            height: 150px;
+        }
+        .info-box > input[type="text"]{
+            border: none;
+            outline: none;
+            width: 400px;
+            height: 50px;
+            color: #666;
+            font-size: 20px;
+            font-weight: 500;
+            padding: 10px;
+            box-shadow: inset 0px 1px 6px 0px rgba(32,33,36,0.28);
+        }
+        .tag-box{
+            min-height: 90px;
+        }
+        .tag-box textarea {
+            margin-top: 70px;
+            padding: 15px 15px;
+            border: none;
+            outline: none;
+            width: 400px;
+            min-height: 64px;
+            max-height: 100px;
+            color: #666;
+            font-size: 15px;
+            display: flex;
+            resize: none;
+            box-shadow: inset 0px 1px 6px 0px rgba(32,33,36,0.28);
+        }
+        .written-status-box {
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .written-status-label{
+            width: 300px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .written-status-label > span {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+        .written-status-label > span > input[type="radio"]{
+            position: absolute;
+            visibility: hidden;
+        }
+        .written-status-label > span > input[type=radio] + label{
+            cursor: pointer;
+            color: #666;
+            font-size: 17px;
+        }
+        .written-status-label > span > input[type=radio]:checked + label{
+            color: rgb(0, 76, 3, 1);
+        }
+        .written-status-bar{
+            width: 300px;
+            height: 20px;
+            padding: 0px 50px;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+        }
+        .written-status-bar > div {
+            width: 200px;
+            height: 10px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: inset 0px 1px 6px 0px rgba(32,33,36,0.28);
+            display: flex;
+            flex-direction: row;
+        }
+        .written-status-bar > div > a {
+            width: 50%;
+            border-radius: 15px 0px 0px 15px;
+        }
+        .written-status-bar > div > a {
+            width: 100%;
+            border-radius: 15px;
+        }
+
+        .wirte-button {
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        .wirte-button button {
+            width: 140px;
+            height: 38px;
+            border: none;
+            border-radius: 19px;
+            background: #fff;
+            color: #666;
+            font-size: 17px;
+            font-weight: 600;
+            border: 1px solid rgb(0, 76, 3, 0.5);
+            border-right: 1px solid rgb(0, 76, 3, 0.2);
+            border-bottom: 1px solid rgb(0, 76, 3, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+        .wirte-button button:hover{
+            background: rgb(0, 76, 3, 0.8);
+            color: #fff;
+        }
+
+        .write-container {
+            min-width: 500px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .write-box {
+            margin: 30px 70px;
+        }
+        .write-box textarea {
+            position: relative;
+            padding: 8px 10px;
+            height: 36px;
+            line-height: 20px;
+            border: none;
+            outline: none;
+            resize: none;
+            width: 100%;
+            font-size: 15px;
+            box-shadow: inset 0px 1px 1px 1px rgba(32,33,36,0.28), 7px 0 0 0 rgba(32,33,36,0.28);
+        }
+    </style>
+</head>
+<body>
+    <div class="manage-menu">
+        <button></button>
+        <button>작성</button>
+        <button>통계</button>
+        <button>관리</button>
+    </div>
+    <div class="write-frame">
+        <div class="write-container">
+            <div class="write-box">
+                <textarea placeholder="입력" oninput="auto_height2(this)"></textarea>
+            </div>
+        </div>
+        <script>
+            function auto_height2(elmt){
+                elmt.style.height = "36px";
+                elmt.style.height = (elmt.scrollHeight) + "px";
+            }
+        </script>
+        <div class="right-frame">
+            <div class="category-container">
+                <div class="category-box selected">시</div>
+                <div class="category-box">비평</div>
+                <div class="category-box">미학론</div>
+                <div class="category-box">단상</div>
+                <div class="category-box">한줄모음</div>
+            </div>
+            <div class="title-container">
+                <div class="title-box info-box">
+                    <input type="text" placeholder="제목 입력">
+                </div>
+                <div class="tag-box info-box">
+                    <textarea oninput="auto_height(this)" placeholder="태그 입력"></textarea>
+                </div>
+                <script>
+                    function auto_height(elmt){
+                        elmt.style.height = "64px";
+                        elmt.style.height = (elmt.scrollHeight) + "px";
+                    }
+                </script>
+                <div class="written-status-box">
+                    <div class="written-status-label">
+                        <span>
+                            <input id="level-1" type="radio" name="written-status" value="씨앗" checked>
+                            <label for="level-1">씨앗</label>
+                        </span>
+                        <span>
+                            <input id="level-2" type="radio" name="written-status" value="작품미달">
+                            <label for="level-2">작품미달</label>
+                        </span>
+                        <span>
+                            <input id="level-3" type="radio" name="written-status" value="발행가능">
+                            <label for="level-3">발행가능</label>
+                        </span>
+                    </div>
+                    <div class="written-status-bar">
+                        <div>
+                            <a></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="wirte-button">
+                    <button>작성 완료</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

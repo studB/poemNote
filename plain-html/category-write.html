@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Category-Write</title>
+        <style>
+            [data-placeholder]:empty::before{
+                content: attr(data-placeholder);
+            }
+            [data-placeholder]:focus:empty:before{
+                content: "";
+            }
+        </style>
+    </head>
+    <body style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+        <main>
+            <section style="width: 450px; height: 600px; display: flex; flex-direction: column; border: 1px solid brown; justify-content: space-between;">
+                <div style="width: inherit; height: 100px;">
+                    <div contenteditable="true" data-placeholder="Write Title" style="border: 1px solid gray;"></div>
+                </div>
+                <div style="width: inherit; height: 250px;">
+                    <textarea></textarea>
+                </div>
+                <div style="width: inherit; flex: 1;">
+                    <div>
+                        <span>Tag : </span>
+                        <div contenteditable="true" style="border: 1px solid gray;"></div>
+                    </div>
+                    <div>
+                        <span>Completed Status : </span></div><br/>
+                        <input type="radio" value="걸작본"><label>걸작본</label>
+                        <input type="radio" value="습작본"><label>습작본</label>
+                        <input type="radio" value="수정본"><label>수정본</label>
+                        <input type="radio" value="초고본"><label>초고본</label>
+                    </div>
+                </div>
+                <button>Save</button>
+            </section>
+        </main>
+    </body>
+</html>
