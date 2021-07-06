@@ -15,4 +15,4 @@ COPY --from=builder app/application/ ./
 EXPOSE 9000
 
 ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
-CMD ["--db.location=192.168.35.246"]
+CMD ["--db.location=postgresql"]
