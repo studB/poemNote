@@ -1,5 +1,5 @@
 const DEV_URL = 'http://localhost:9999/'
-const PROD_URL = 'http://localhost:9000/'
+const PROD_URL = `${window.location.host}/`
 
 const config = {
     isProudction: process.env.NODE_ENV !== 'development', 
